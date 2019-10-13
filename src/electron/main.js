@@ -1,6 +1,7 @@
 const { ipcMain, Notification } = require('electron');
 const app = require('electron').app;
 const Window = require('./Window');
+const API = require('./api/API');
 
 const path = require('path');
 const url = require('url');
@@ -29,8 +30,8 @@ function main() {
         mainWindow = null
     })
 
-    ipcMain.on('produce', () => {
-        console.log("TEST");
+    ipcMain.on('produce', (e, data) => {
+        console.log(data);
     });
     
 }

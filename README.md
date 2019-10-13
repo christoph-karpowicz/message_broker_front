@@ -1,1 +1,1 @@
-## Electron/React front for message broker app
+## Electron/React front-end for the message broker app.
