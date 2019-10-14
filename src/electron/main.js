@@ -17,6 +17,7 @@ function main() {
     mainWindow = new Window({
         url: startUrl
     });
+    const broker = new API("localhost", 8080, "http:");
     
     let myNotification = new Notification('Title', {
         body: 'Lorem Ipsum Dolor Sit Amet'
@@ -30,8 +31,11 @@ function main() {
         mainWindow = null
     })
 
-    ipcMain.on('produce', (e, data) => {
-        console.log(data);
+    ipcMain.on('produce', async (e, data) => {
+        const postMessage = await broker.produce(data);
+        e.sender.send('produceReply', postMessage);
+        const length = await broker.getLength()
+        e.sender.send('lengthReply', length);
     });
     
 }
