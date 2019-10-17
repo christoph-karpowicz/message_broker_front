@@ -10,8 +10,26 @@ class API {
         }
     }
 
+    consume() {
+        const req = new Request({
+            method: 'GET',
+            server: this.server,
+            data: {
+                type: "consume",
+                queue: 0,
+            },            
+            cb: (chunk, resolve) => {
+                if (chunk) {
+                    const data = chunk.toString('utf8');
+                    resolve(data)
+                }
+            },
+        });
+        return req.commit();
+    }
+
     getLength() {
-        let req = new Request({
+        const req = new Request({
             method: 'GET',
             server: this.server,
             data: {
@@ -20,7 +38,7 @@ class API {
             },            
             cb: (chunk, resolve) => {
                 if (chunk) {
-                    var data = chunk.toString('utf8');
+                    const data = chunk.toString('utf8');
                     resolve(data)
                 }
             },
@@ -29,7 +47,7 @@ class API {
     }
 
     produce(data) {
-        let req = new Request({
+        const req = new Request({
             method: 'POST',
             server: this.server,
             data: {
@@ -39,7 +57,7 @@ class API {
             },            
             cb: (chunk, resolve) => {
                 if (chunk) {
-                    var data = chunk.toString('utf8');
+                    const data = chunk.toString('utf8');
                     resolve(data)
                 }
             },

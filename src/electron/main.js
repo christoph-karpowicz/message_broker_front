@@ -34,6 +34,14 @@ function main() {
     ipcMain.on('produce', async (e, data) => {
         const postMessage = await broker.produce(data);
         e.sender.send('produceReply', postMessage);
+    });
+    
+    ipcMain.on('consume', async (e) => {
+        const postMessage = await broker.consume();
+        e.sender.send('consumeReply', postMessage);
+    });
+
+    ipcMain.on('length', async (e) => {
         const length = await broker.getLength()
         e.sender.send('lengthReply', length);
     });
