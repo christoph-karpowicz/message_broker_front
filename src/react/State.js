@@ -2,10 +2,13 @@ import React, { createContext, useContext, useReducer } from 'react';
 
 export const StateContext = createContext();
 
-export const StateProvider = ({reducer, initialState, children}) => (
-    <StateContext.Provider value={useReducer(reducer, initialState)}>
+export const StateProvider = ({reducer, state, children}) => (
+    <StateContext.Provider value={{ 
+        reducer: useReducer(reducer, state), 
+        state
+    }}>
         {children}
     </StateContext.Provider>
 );
 
-export const useStateValue = () => useContext(StateContext);
+export const useGlobalState = () => useContext(StateContext);

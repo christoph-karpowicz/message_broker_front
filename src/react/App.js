@@ -3,26 +3,38 @@ import { StateProvider } from './State';
 import Main from './main/Main';
 const { ipcRenderer, remote } = window.require('electron');
 
+let listenersDefined = false;
+
 function App() {
   // State.
   const [message, setMessage] = useState("")
   const [consumed, setConsumed] = useState("")
 
   useEffect(() => {
-    // console.log(message);
+    // console.log(1);
   })
 
   // IPC listeners.
-  ipcRenderer.once('lengthReply', (e, res) => {
-    console.log(res)
-    setConsumed(res)
-  })
-  
-  ipcRenderer.once('consumeReply', (e, res) => {
-    console.log(res)
-    setConsumed(res)
-  })
+  if (!listenersDefined) {
 
+    ipcRenderer.once('lengthReply', (e, res) => {
+      console.log(res)
+      // setConsumed(res)
+    })
+    
+    ipcRenderer.once('consumeReply', (e, res) => {
+      console.log(res)
+      setConsumed(res)
+    })
+  
+    ipcRenderer.once('produceReply', (e, res) => {
+      console.log(res)
+      // setConsumed(res)
+    })
+    
+    listenersDefined = true;
+  }
+  
   // App component methods.
   const produce = (msg) => {
     const data = {
@@ -37,27 +49,23 @@ function App() {
   }
 
   const reducer = (state, action) => {
-
-    console.log(state, action)
-    
     switch (action.type) {
       case "consume":
         consume()
-        return {message, consumed}
         break;
       case "produce":
-        produce(action.val)
-        return state
+        produce(message)
         break;
       case "setMessage":
         setMessage(action.val)
         break;
     }
+    return state
   }
   
   return (
     <div id="app">
-      <StateProvider initialState={{message, consumed}} reducer={reducer}>
+      <StateProvider state={{message, consumed}} reducer={reducer}>
         <Main />
       </StateProvider>
     </div>

@@ -32,18 +32,18 @@ function main() {
     })
 
     ipcMain.on('produce', async (e, data) => {
-        const postMessage = await broker.produce(data);
-        e.sender.send('produceReply', postMessage);
+        const produceResponse = await broker.produce(data);
+        e.sender.send('produceReply', produceResponse);
     });
     
     ipcMain.on('consume', async (e) => {
-        const postMessage = await broker.consume();
-        e.sender.send('consumeReply', postMessage);
+        const consumeResponse = await broker.consume();
+        e.sender.send('consumeReply', consumeResponse);
     });
 
     ipcMain.on('length', async (e) => {
-        const length = await broker.getLength()
-        e.sender.send('lengthReply', length);
+        const lengthResponse = await broker.getLength()
+        e.sender.send('lengthReply', lengthResponse);
     });
     
 }

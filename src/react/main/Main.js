@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import { useStateValue } from '../State';
+import React from 'react';
+import { useGlobalState } from '../State';
+import Producer from './Producer';
+import Consumer from './Consumer';
+import Queue from './Queue';
 
 const Main = () => {
-    const [state, dispatch] = useStateValue()
-    const [message, setMessage] = useState("")
+    const [rstate, dispatch] = useGlobalState().reducer
+    const state = useGlobalState().state
   
     return (
         <div id="main">
-            <div id="producer">
-                <textarea id="message" className="" name="message" onChange={e => setMessage(e.target.value)}></textarea>
-            </div>
-            <div id="consumer">{state.consumed}</div>
+            <Producer />
+            <Consumer />
             <div id="producer-panel">
-                <button id="produce" type="button" className="btn" onClick={() => dispatch({type: "produce", val: message})}>
+                <button id="produce" type="button" className="btn" onClick={() => dispatch({type: "produce"})}>
                     Produce
                 </button>
             </div>
@@ -21,7 +22,7 @@ const Main = () => {
                     Consume
                 </button>
             </div>
-            <div id="queue">queue</div>
+            <Queue />
         </div>
     )
 }
