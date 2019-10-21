@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { StateProvider } from './State';
+import Main from './main/Main';
 const { ipcRenderer, remote } = window.require('electron');
 
 function App() {
@@ -13,18 +15,18 @@ function App() {
   // IPC listeners.
   ipcRenderer.once('lengthReply', (e, res) => {
     console.log(res)
-    setConsumed(res);
+    setConsumed(res)
   })
   
   ipcRenderer.once('consumeReply', (e, res) => {
     console.log(res)
-    setConsumed(res);
+    setConsumed(res)
   })
 
   // App component methods.
-  const produce = () => {
+  const produce = (msg) => {
     const data = {
-      msg: message
+      msg
     }
     
     ipcRenderer.send('produce', data)
@@ -33,24 +35,31 @@ function App() {
   const consume = () => {
     ipcRenderer.send('consume')
   }
+
+  const reducer = (state, action) => {
+
+    console.log(state, action)
+    
+    switch (action.type) {
+      case "consume":
+        consume()
+        return {message, consumed}
+        break;
+      case "produce":
+        produce(action.val)
+        return state
+        break;
+      case "setMessage":
+        setMessage(action.val)
+        break;
+    }
+  }
   
   return (
-    <div id="main">
-      <div id="producer">
-        <textarea id="message" className="" name="message" onChange={e => setMessage(e.target.value)}></textarea>
-      </div>
-      <div id="consumer">{consumed}</div>
-      <div id="producer-panel">
-        <button id="produce" type="button" className="btn" onClick={produce}>
-            Produce
-        </button>
-      </div>
-      <div id="consumer-panel">
-        <button id="consume" type="button" className="btn" onClick={consume}>
-            Consume
-        </button>
-      </div>
-      <div id="queue">queue</div>
+    <div id="app">
+      <StateProvider initialState={{message, consumed}} reducer={reducer}>
+        <Main />
+      </StateProvider>
     </div>
   )
 }

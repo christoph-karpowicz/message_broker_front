@@ -11,6 +11,7 @@ const defaultProps = {
 }
 
 class Window extends BrowserWindow {
+  
   constructor ({ url, ...windowSettings }) {
     super({ ...defaultProps, ...windowSettings })
 
@@ -21,6 +22,7 @@ class Window extends BrowserWindow {
       this.show()
     })
   }
+  
 }
 
 module.exports = Window;
