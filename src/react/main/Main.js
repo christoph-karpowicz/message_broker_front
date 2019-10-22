@@ -13,7 +13,7 @@ const Main = () => {
             <Producer />
             <Consumer />
             <div id="producer-panel">
-                <button id="produce" type="button" className="btn" onClick={() => dispatch({type: "produce"})}>
+                <button id="produce" type="button" className="btn" onClick={() => dispatch({type: "produce", payload: { message: state.message }})}>
                     Produce
                 </button>
             </div>

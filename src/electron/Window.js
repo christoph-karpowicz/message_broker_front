@@ -1,5 +1,3 @@
-'use strict'
-
 const { BrowserWindow } = require('electron')
 
 const defaultProps = {
@@ -25,4 +23,4 @@ class Window extends BrowserWindow {
   
 }
 
-module.exports = Window;
+module.exports = Window

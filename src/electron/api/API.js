@@ -21,7 +21,7 @@ class API {
             cb: (chunk, resolve) => {
                 if (chunk) {
                     const data = chunk.toString('utf8');
-                    resolve(data)
+                    resolve(JSON.parse(data))
                 }
             },
         });
@@ -39,7 +39,7 @@ class API {
             cb: (chunk, resolve) => {
                 if (chunk) {
                     const data = chunk.toString('utf8');
-                    resolve(data)
+                    resolve(JSON.parse(data))
                 }
             },
         });
@@ -58,7 +58,7 @@ class API {
             cb: (chunk, resolve) => {
                 if (chunk) {
                     const data = chunk.toString('utf8');
-                    resolve(data)
+                    resolve(JSON.parse(data))
                 }
             },
         });

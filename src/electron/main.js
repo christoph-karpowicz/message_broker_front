@@ -9,6 +9,8 @@ const url = require('url');
 let mainWindow;
 
 function main() {
+    console.log("Main process started.");
+    
     const startUrl = process.env.ELECTRON_START_URL || url.format({
         pathname: path.join(__dirname, '/../build/index.html'),
         protocol: 'file:',
