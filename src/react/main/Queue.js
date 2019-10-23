@@ -5,8 +5,12 @@ const Queue = () => {
     const [rstate, dispatch] = useGlobalState().reducer
     const state = useGlobalState().state
   
+    const nodes = rstate.map(node =>
+        <div>{node.msg}</div>
+    )
+    
     return (
-        <div id="queue">queue</div>
+        <div id="queue">{nodes}</div>
     )
 }
 

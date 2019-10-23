@@ -13,13 +13,23 @@ const Main = () => {
             <Producer />
             <Consumer />
             <div id="producer-panel">
-                <button id="produce" type="button" className="btn" onClick={() => dispatch({type: "produce", payload: { message: state.message }})}>
+                <button id="produce" type="button" className="btn" onClick={
+                        () => dispatch({
+                            type: "produce", 
+                            payload: { message: state.message }
+                        })}>
                     Produce
                 </button>
             </div>
             <div id="consumer-panel">
                 <button id="consume" type="button" className="btn" onClick={() => dispatch({type: "consume"})}>
                     Consume
+                </button>
+                <button id="consume" type="button" className="btn" onClick={() => dispatch({type: "peek", payload: { index: 2 }})}>
+                    Peek
+                </button>
+                <button id="consume" type="button" className="btn" onClick={() => dispatch({type: "peekAll"})}>
+                    Peek all
                 </button>
             </div>
             <Queue />

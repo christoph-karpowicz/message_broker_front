@@ -46,6 +46,34 @@ class API {
         return req.commit();
     }
 
+    peek(index) {
+        const req = new Request({
+            method: 'GET',
+            server: this.server,
+            data: {
+                type: "peek",
+                index,
+                queue: 0,
+            },            
+            cb: (chunk, resolve) => {
+                if (chunk) {
+                    const data = chunk.toString('utf8');
+                    resolve(JSON.parse(data))
+                }
+            },
+        });
+        return req.commit();
+    }
+    
+    peekAll(length) {
+        let reqArr = []
+        
+        for (let i = 0; i < length; i++) {
+            reqArr.push(this.peek(i))
+        }
+        return reqArr;
+    }
+    
     produce(data) {
         const req = new Request({
             method: 'POST',

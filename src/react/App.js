@@ -10,7 +10,7 @@ function App() {
   // State.
   const [message, setMessage] = useState("")
   const [consumed, setConsumed] = useState("")
-  const [rstate, dispatch] = useReducer(reducer, null);
+  const [rstate, dispatch] = useReducer(reducer, [3, 4]);
 
   useEffect(() => {
     // console.log(1);
@@ -19,16 +19,29 @@ function App() {
   // IPC listeners.
   if (!listenersDefined) {
 
+    ipcRenderer.on('consumeReply', (e, res) => {
+      console.log(res)
+      setConsumed(res.msg)
+    })
+    
     ipcRenderer.on('lengthReply', (e, res) => {
       console.log(res)
       // setConsumed(res)
     })
     
-    ipcRenderer.on('consumeReply', (e, res) => {
+    ipcRenderer.on('peekReply', (e, res) => {
       console.log(res)
       setConsumed(res.msg)
     })
-  
+
+    ipcRenderer.on('peekAllReply', (e, res) => {
+      dispatch({ 
+        type: "updateQueue", 
+        payload: { queue: res } 
+      });
+      // setConsumed(res.msg)
+    })
+
     ipcRenderer.on('produceReply', (e, res) => {
       console.log(res)
       // setConsumed(res)
