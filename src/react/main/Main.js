@@ -2,7 +2,7 @@ import React from 'react';
 import { useGlobalState } from '../State';
 import Producer from './Producer';
 import Consumer from './Consumer';
-import Queue from './Queue';
+import Queue from './queue/Queue';
 
 const Main = () => {
     const [rstate, dispatch] = useGlobalState().reducer
@@ -24,12 +24,6 @@ const Main = () => {
             <div id="consumer-panel">
                 <button id="consume" type="button" className="btn" onClick={() => dispatch({type: "consume"})}>
                     Consume
-                </button>
-                <button id="consume" type="button" className="btn" onClick={() => dispatch({type: "peek", payload: { index: 2 }})}>
-                    Peek
-                </button>
-                <button id="consume" type="button" className="btn" onClick={() => dispatch({type: "peekAll"})}>
-                    Peek all
                 </button>
             </div>
             <Queue />

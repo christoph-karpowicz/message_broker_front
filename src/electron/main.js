@@ -16,10 +16,12 @@ function main() {
         protocol: 'file:',
         slashes: true
     })
+    const broker = new API("localhost", 8080, "http:")
+    
     mainWindow = new Window({
         url: startUrl
     })
-    const broker = new API("localhost", 8080, "http:")
+    mainWindow.maximize()
     
     let myNotification = new Notification('Title', {
         body: 'Lorem Ipsum Dolor Sit Amet'
@@ -53,7 +55,7 @@ function main() {
         const lengthResponse = await broker.getLength()
         const queueLength = lengthResponse.msg
         Promise.all(broker.peekAll(queueLength)).then(queue => {
-            e.sender.send('peekAllReply', queue)
+            e.sender.send('peekAllReply', queue.reverse())
         })
     })
 
