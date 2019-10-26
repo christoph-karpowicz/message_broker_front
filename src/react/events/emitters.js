@@ -1,3 +1,4 @@
+import { randomString } from '../util/util'
 const { ipcRenderer } = window.require('electron');
 
 // App component methods.
@@ -35,6 +36,10 @@ export const reducer = (state, action) => {
       break;
     case "produce":
       produce(action.payload.message)
+      break;
+    case "produceRandom":
+      const randomMsg = randomString();
+      produce(randomMsg)
       break;
     case "updateQueue":
       return action.payload.queue;

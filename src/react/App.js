@@ -2,6 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { StateProvider } from './State';
 import Main from './main/Main';
 import { reducer } from './events/emitters';
+import { setListeners } from './events/listeners';
 const { ipcRenderer, remote } = window.require('electron');
 
 let listenersDefined = false;
@@ -26,36 +27,12 @@ function App() {
 
   // IPC listeners.
   if (!listenersDefined) {
-
-    ipcRenderer.on('consumeReply', (e, res) => {
-      console.log(res)
-      setConsumed(res.msg)
-      setReload(true)
-    })
     
-    ipcRenderer.on('lengthReply', (e, res) => {
-      console.log(res)
-      // setConsumed(res)
-    })
-    
-    ipcRenderer.on('peekReply', (e, res) => {
-      console.log(res)
-      setConsumed(res.msg)
-    })
-
-    ipcRenderer.on('peekAllReply', (e, res) => {
-      dispatch({ 
-        type: "updateQueue", 
-        payload: { queue: res } 
-      });
-      // setConsumed(res.msg)
-    })
-
-    ipcRenderer.on('produceReply', (e, res) => {
-      console.log(res)
-      setReload(true)
-      // setConsumed(res)
-    })
+    setListeners({
+      setConsumed,
+      setReload,
+      dispatch
+    });
     
     listenersDefined = true;
   }

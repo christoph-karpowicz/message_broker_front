@@ -20,6 +20,9 @@ const Main = () => {
                         })}>
                     Produce
                 </button>
+                <button id="produce" type="button" className="btn" onClick={() => dispatch({type: "produceRandom"})}>
+                    Produce random
+                </button>
             </div>
             <div id="consumer-panel">
                 <button id="consume" type="button" className="btn" onClick={() => dispatch({type: "consume"})}>
