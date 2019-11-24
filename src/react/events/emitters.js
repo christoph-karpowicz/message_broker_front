@@ -10,8 +10,8 @@ const peek = (index) => {
   ipcRenderer.send('peek', index)
 }
 
-const peekAll = (index) => {
-  ipcRenderer.send('peekAll', index)
+const peekAll = () => {
+  ipcRenderer.send('peekAll')
 }
 
 const produce = (msg) => {

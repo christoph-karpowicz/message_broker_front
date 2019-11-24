@@ -10,6 +10,14 @@ class API {
         }
     }
 
+    callback(response, resolve, reject) {
+        console.log(response.data)
+        if (response.status == 200)
+            resolve(response.data)
+        else
+            reject(response.data)
+    }
+
     consume() {
         const req = new Request({
             method: 'GET',
@@ -18,12 +26,7 @@ class API {
                 type: "consume",
                 queue: 0,
             },            
-            cb: (chunk, resolve) => {
-                if (chunk) {
-                    const data = chunk.toString('utf8');
-                    resolve(JSON.parse(data))
-                }
-            },
+            cb: this.callback
         });
         return req.commit();
     }
@@ -36,12 +39,7 @@ class API {
                 type: "length",
                 queue: 0,
             },            
-            cb: (chunk, resolve) => {
-                if (chunk) {
-                    const data = chunk.toString('utf8');
-                    resolve(JSON.parse(data))
-                }
-            },
+            cb: this.callback
         });
         return req.commit();
     }
@@ -52,15 +50,10 @@ class API {
             server: this.server,
             data: {
                 type: "peek",
-                index,
+                index: index,
                 queue: 0,
             },            
-            cb: (chunk, resolve) => {
-                if (chunk) {
-                    const data = chunk.toString('utf8');
-                    resolve(JSON.parse(data))
-                }
-            },
+            cb: this.callback
         });
         return req.commit();
     }
@@ -83,12 +76,7 @@ class API {
                 type: "produce",
                 message: data.msg
             },            
-            cb: (chunk, resolve) => {
-                if (chunk) {
-                    const data = chunk.toString('utf8');
-                    resolve(JSON.parse(data))
-                }
-            },
+            cb: this.callback
         });
         return req.commit();
     }

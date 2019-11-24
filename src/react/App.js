@@ -3,7 +3,6 @@ import { StateProvider } from './State';
 import Main from './main/Main';
 import { reducer } from './events/emitters';
 import { setListeners } from './events/listeners';
-const { ipcRenderer, remote } = window.require('electron');
 
 let listenersDefined = false;
 
