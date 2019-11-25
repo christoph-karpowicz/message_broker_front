@@ -4,7 +4,7 @@ export function setListeners(state) {
 
     ipcRenderer.on('consumeReply', (e, res) => {
         console.log(res)
-        state.setConsumed(res.msg)
+        state.setConsumed(res.data)
         state.setReload(true)
     })
         
@@ -12,12 +12,12 @@ export function setListeners(state) {
         console.log(res)
     })
         
-    ipcRenderer.on('peekReply', (e, res) => {
+    ipcRenderer.on('getReply', (e, res) => {
         console.log(res)
-        state.setConsumed(res.msg)
+        state.setConsumed(res.data)
     })
 
-    ipcRenderer.on('peekAllReply', (e, res) => {
+    ipcRenderer.on('getAllReply', (e, res) => {
         state.dispatch({ 
             type: "updateQueue", 
             payload: { queue: res } 

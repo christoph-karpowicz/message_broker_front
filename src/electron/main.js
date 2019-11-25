@@ -49,39 +49,15 @@ function main() {
         e.sender.send('lengthReply', lengthResponse)
     })
 
-    ipcMain.on('peek', async (e, index) => {
-        const peekResponse = await broker.peek(index).catch(err => console.log(err))
-        e.sender.send('peekReply', peekResponse)
+    ipcMain.on('get', async (e, index) => {
+        const getResponse = await broker.get(index).catch(err => console.log(err))
+        e.sender.send('getReply', getResponse)
     })
 
-    ipcMain.on('peekAll', async (e) => {
-        const lengthResponse = await broker.getLength().catch(err => console.log(err))
-        const queueLength = lengthResponse.msg
-        // console.log(queueLength)
-        // let peekArray = []
-        // for (let i = 0; i < queueLength; i++) {
-        //     peekArray.push(
-        //         axios.get('http://localhost:8080', {
-        //             params: querystring.stringify({
-        //                 type: "peek",
-        //                 index: i,
-        //                 queue: 0,
-        //             })
-        //           })
-        //     )
-        // }
-        // Promise.all(peekArray).then(res => {
-        //     console.log(res.data)
-        //     // e.sender.send('peekAllReply', queue.reverse())
-        // })
-        // .catch(err => console.log(err))
-
-        const peekArray = broker.peekAll(queueLength)
-        Promise.all(peekArray).then(queue => {
-            console.log(queue)
-            e.sender.send('peekAllReply', queue.reverse())
-        })
-        .catch(err => console.log(err))
+    ipcMain.on('getAll', async (e) => {
+        const getAllResponse = await broker.getAll().catch(err => console.log(err))
+        const parsedResponse = JSON.parse(getAllResponse.data)
+        e.sender.send('getAllReply', parsedResponse.nodes.reverse())
     })
 
     ipcMain.on('produce', async (e, message) => {

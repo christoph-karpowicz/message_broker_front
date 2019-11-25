@@ -6,12 +6,12 @@ const consume = () => {
   ipcRenderer.send('consume')
 }
 
-const peek = (index) => {
-  ipcRenderer.send('peek', index)
+const get = (index) => {
+  ipcRenderer.send('get', index)
 }
 
-const peekAll = () => {
-  ipcRenderer.send('peekAll')
+const getAll = () => {
+  ipcRenderer.send('getAll')
 }
 
 const produce = (msg) => {
@@ -28,11 +28,11 @@ export const reducer = (state, action) => {
     case "consume":
       consume()
       break;
-    case "peek":
-      peek(action.payload.index)
+    case "get":
+      get(action.payload.index)
       break;
-    case "peekAll":
-      peekAll()
+    case "getAll":
+      getAll()
       break;
     case "produce":
       produce(action.payload.message)

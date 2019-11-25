@@ -14,12 +14,12 @@ function App() {
   const [rstate, dispatch] = useReducer(reducer, []);
 
   useEffect(() => {
-    dispatch({type: "peekAll"})
+    dispatch({type: "getAll"})
   }, [])
 
   useEffect(() => {
     if (reload) {
-      dispatch({type: "peekAll"})
+      dispatch({type: "getAll"})
       setReload(false)
     }
   }, [reload])

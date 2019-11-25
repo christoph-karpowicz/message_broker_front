@@ -7,16 +7,16 @@ const Queue = () => {
     const state = useGlobalState().state
   
     const nodes = rstate.map((node, i, self) =>
-        <div key={i} className="node-container">
+        <div key={node.index} className="node-container">
             {
-                i !== 0 && <div className="node-connector"><div className="node-connector-line"></div></div>
+                node.index !== 0 && <div className="node-connector"><div className="node-connector-line"></div></div>
             }
             <Node data={{
-                id: i,
-                msg: node.msg
+                id: node.index,
+                msg: node.message
             }} />
             {
-                i !== (self.length - 1) && <div className="node-connector"><div className="node-connector-line"></div></div>
+                node.index !== (self.length - 1) && <div className="node-connector"><div className="node-connector-line"></div></div>
             }
         </div>
     )

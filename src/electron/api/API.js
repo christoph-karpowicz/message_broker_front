@@ -44,12 +44,12 @@ class API {
         return req.commit();
     }
 
-    peek(index) {
+    get(index) {
         const req = new Request({
             method: 'GET',
             server: this.server,
             data: {
-                type: "peek",
+                type: "get",
                 index: index,
                 queue: 0,
             },            
@@ -58,13 +58,17 @@ class API {
         return req.commit();
     }
     
-    peekAll(length) {
-        let reqArr = []
-        
-        for (let i = 0; i < length; i++) {
-            reqArr.push(this.peek(i))
-        }
-        return reqArr;
+    getAll() {
+        const req = new Request({
+            method: 'GET',
+            server: this.server,
+            data: {
+                type: "getAll",
+                queue: 0,
+            },            
+            cb: this.callback
+        });
+        return req.commit();
     }
     
     produce(data) {
