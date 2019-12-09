@@ -46,6 +46,7 @@ function main() {
 
     ipcMain.on('length', async (e) => {
         const lengthResponse = await broker.getLength().catch(err => console.log(err))
+        console.log(lengthResponse)
         e.sender.send('lengthReply', lengthResponse)
     })
 
@@ -56,8 +57,7 @@ function main() {
 
     ipcMain.on('getAll', async (e) => {
         const getAllResponse = await broker.getAll().catch(err => console.log(err))
-        const parsedResponse = JSON.parse(getAllResponse.data)
-        e.sender.send('getAllReply', parsedResponse.nodes.reverse())
+        e.sender.send('getAllReply', getAllResponse)
     })
 
     ipcMain.on('produce', async (e, message) => {

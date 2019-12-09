@@ -8,10 +8,11 @@ let listenersDefined = false;
 
 function App() {
   // State.
-  const [message, setMessage] = useState("")
+  const [message, setMessage]   = useState("")
   const [consumed, setConsumed] = useState("")
-  const [reload, setReload] = useState(false)
-  const [rstate, dispatch] = useReducer(reducer, []);
+  const [log, setLog]           = useState("")
+  const [reload, setReload]     = useState(false)
+  const [rstate, dispatch]      = useReducer(reducer, []);
 
   useEffect(() => {
     dispatch({type: "getAll"})
@@ -29,6 +30,7 @@ function App() {
     
     setListeners({
       setConsumed,
+      setLog,
       setReload,
       dispatch
     });
@@ -38,7 +40,7 @@ function App() {
   
   return (
     <div id="app">
-      <StateProvider state={{message, consumed, setMessage}} reducer={[rstate, dispatch]}>
+      <StateProvider state={{message, consumed, log, setMessage}} reducer={[rstate, dispatch]}>
         <Main />
       </StateProvider>
     </div>

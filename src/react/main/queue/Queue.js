@@ -9,14 +9,14 @@ const Queue = () => {
     const nodes = rstate.map((node, i, self) =>
         <div key={node.index} className="node-container">
             {
-                node.index !== 0 && <div className="node-connector"><div className="node-connector-line"></div></div>
+                i !== 0 && <div className="node-connector"><div className="node-connector-line"></div></div>
             }
             <Node data={{
-                id: node.index,
+                id: i,
                 msg: node.message
             }} />
             {
-                node.index !== (self.length - 1) && <div className="node-connector"><div className="node-connector-line"></div></div>
+                i !== (self.length - 1) && <div className="node-connector"><div className="node-connector-line"></div></div>
             }
         </div>
     )

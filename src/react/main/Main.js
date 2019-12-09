@@ -3,6 +3,7 @@ import { useGlobalState } from '../State';
 import Producer from './Producer';
 import Consumer from './Consumer';
 import Queue from './queue/Queue';
+import LogsPanel from './LogsPanel';
 
 const Main = () => {
     const [rstate, dispatch] = useGlobalState().reducer
@@ -30,6 +31,7 @@ const Main = () => {
                 </button>
             </div>
             <Queue />
+            <LogsPanel />
         </div>
     )
 }
