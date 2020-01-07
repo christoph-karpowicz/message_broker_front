@@ -14,6 +14,7 @@ body {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 50px minmax(400px, 400px) 50px;
   grid-template-areas: 
+    "queue-panel    queue-panel"
     "producer       consumer"
     "producer-panel consumer-panel"
     "queue          queue"
@@ -34,6 +35,9 @@ body {
 #main button:hover {
   border: 1px solid #000;
   background-color: #fff;
+}
+#queue-panel {
+  grid-area: queue-panel;
 }
 #producer {
   grid-area: producer;

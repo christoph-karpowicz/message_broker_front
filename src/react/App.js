@@ -8,6 +8,7 @@ let listenersDefined = false;
 
 function App() {
   // State.
+  const [queue, setQueue]       = useState("")
   const [message, setMessage]   = useState("")
   const [consumed, setConsumed] = useState("")
   const [log, setLog]           = useState("")
@@ -15,20 +16,21 @@ function App() {
   const [rstate, dispatch]      = useReducer(reducer, []);
 
   useEffect(() => {
-    dispatch({type: "getAll"})
-  }, [])
+    dispatch({type: "getAll", payload: { queue: queue }})
+  }, []);
 
   useEffect(() => {
     if (reload) {
-      dispatch({type: "getAll"})
-      setReload(false)
+      dispatch({type: "getAll", payload: { queue: queue }})
+      setReload(false);
     }
-  }, [reload])
+  }, [reload]);
 
   // IPC listeners.
   if (!listenersDefined) {
     
     setListeners({
+      setQueue,
       setConsumed,
       setLog,
       setReload,
@@ -40,7 +42,7 @@ function App() {
   
   return (
     <div id="app">
-      <StateProvider state={{message, consumed, log, setMessage}} reducer={[rstate, dispatch]}>
+      <StateProvider state={{queue, setQueue, message, consumed, log, setMessage}} reducer={[rstate, dispatch]}>
         <Main />
       </StateProvider>
     </div>

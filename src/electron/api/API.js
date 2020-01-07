@@ -18,53 +18,66 @@ class API {
             reject(response.data)
     }
 
-    consume() {
+    addQueue(data) {
+        const req = new Request({
+            method: 'POST',
+            server: this.server,
+            data: {
+                type: "addQueue",
+                data: data.name
+            },
+            cb: this.callback
+        });
+        return req.commit();
+    }
+
+    consume(data) {
         const req = new Request({
             method: 'GET',
             server: this.server,
             data: {
                 type: "consume",
-                queue: 0,
+                queue: data.queue,
             },            
             cb: this.callback
         });
         return req.commit();
     }
 
-    getLength() {
+    getLength(data) {
         const req = new Request({
             method: 'GET',
             server: this.server,
             data: {
                 type: "length",
-                queue: 0,
+                queue: data.queue,
             },            
             cb: this.callback
         });
         return req.commit();
     }
 
-    get(index) {
+    get(data) {
         const req = new Request({
             method: 'GET',
             server: this.server,
             data: {
                 type: "get",
-                index: index,
-                queue: 0,
+                index: data.index,
+                queue: data.queue,
             },            
             cb: this.callback
         });
         return req.commit();
     }
     
-    getAll() {
+    getAll(data) {
         const req = new Request({
             method: 'GET',
             server: this.server,
             data: {
                 type: "getAll",
-                queue: 0,
+                queue: data.queue,
             },            
             cb: this.callback
         });
@@ -76,9 +89,22 @@ class API {
             method: 'POST',
             server: this.server,
             data: {
-                queue: 0,
+                queue: data.queue,
                 type: "produce",
-                message: data.msg
+                data: data.msg
+            },
+            cb: this.callback
+        });
+        return req.commit();
+    }
+
+    removeQueue(data) {
+        const req = new Request({
+            method: 'GET',
+            server: this.server,
+            data: {
+                type: "removeQueue",
+                queue: data.name
             },            
             cb: this.callback
         });
