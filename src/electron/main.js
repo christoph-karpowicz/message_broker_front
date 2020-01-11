@@ -36,6 +36,11 @@ function main() {
     });
 
     // IPC listeners.
+    ipcMain.on('addQueue', async (e, data) => {
+        const addQueueResponse = await broker.addQueue(data).catch(err => console.log(err));
+        e.sender.send('addQueueReply', addQueueResponse);
+    });
+
     ipcMain.on('consume', async (e, data) => {
         const consumeResponse = await broker.consume(data).catch(err => console.log(err));
         e.sender.send('consumeReply', consumeResponse);
@@ -43,7 +48,6 @@ function main() {
 
     ipcMain.on('length', async (e, data) => {
         const lengthResponse = await broker.getLength(data).catch(err => console.log(err));
-        console.log(lengthResponse)
         e.sender.send('lengthReply', lengthResponse);
     });
 
@@ -54,7 +58,14 @@ function main() {
 
     ipcMain.on('getAll', async (e, data) => {
         const getAllResponse = await broker.getAll(data).catch(err => console.log(err));
+        // console.log(getAllResponse)
         e.sender.send('getAllReply', getAllResponse);
+    });
+
+    ipcMain.on('getQueueList', async (e) => {
+        const getQueueListResponse = await broker.getQueueList().catch(err => console.log(err));
+        console.log(getQueueListResponse)
+        e.sender.send('getQueueListReply', getQueueListResponse);
     });
 
     ipcMain.on('produce', async (e, data) => {
@@ -62,11 +73,6 @@ function main() {
         e.sender.send('produceReply', produceResponse);
     });
     
-    ipcMain.on('addQueue', async (e, data) => {
-        const addQueueResponse = await broker.addQueue(data).catch(err => console.log(err));
-        e.sender.send('addQueueReply', addQueueResponse);
-    });
-
     ipcMain.on('removeQueue', async (e, data) => {
         const removeQueueResponse = await broker.removeQueue(data).catch(err => console.log(err));
         e.sender.send('removeQueueReply', removeQueueResponse);

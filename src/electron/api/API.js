@@ -84,6 +84,18 @@ class API {
         return req.commit();
     }
     
+    getQueueList() {
+        const req = new Request({
+            method: 'GET',
+            server: this.server,
+            data: {
+                type: "getAllQueueNames",
+            },
+            cb: this.callback
+        });
+        return req.commit();
+    }
+    
     produce(data) {
         const req = new Request({
             method: 'POST',

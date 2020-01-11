@@ -6,7 +6,7 @@ const Queue = () => {
     const [rstate, dispatch] = useGlobalState().reducer
     const state = useGlobalState().state
   
-    const nodes = rstate.map((node, i, self) =>
+    const nodes = rstate.nodes.map((node, i, self) =>
         <div key={node.index} className="node-container">
             {
                 i !== 0 && <div className="node-connector"><div className="node-connector-line"></div></div>
