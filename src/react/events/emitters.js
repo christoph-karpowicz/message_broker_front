@@ -66,11 +66,3 @@ export const reducer = (state, action) => {
   }
   return state
 }
-
-export function Dispatch(event) {
-  switch (event.type) {
-    case "getQueueList":
-      getQueueList();
-      break;
-  }
-}

@@ -58,13 +58,11 @@ function main() {
 
     ipcMain.on('getAll', async (e, data) => {
         const getAllResponse = await broker.getAll(data).catch(err => console.log(err));
-        // console.log(getAllResponse)
         e.sender.send('getAllReply', getAllResponse);
     });
 
     ipcMain.on('getQueueList', async (e) => {
         const getQueueListResponse = await broker.getQueueList().catch(err => console.log(err));
-        console.log(getQueueListResponse)
         e.sender.send('getQueueListReply', getQueueListResponse);
     });
 

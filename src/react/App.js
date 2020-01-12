@@ -8,36 +8,37 @@ let listenersDefined = false;
 
 function App() {
   // State.
-  const [queue, setQueue]         = useState("")
-  const [queueList, setQueueList] = useState([])
-  const [message, setMessage]     = useState("")
-  const [consumed, setConsumed]   = useState("")
-  const [log, setLog]             = useState("")
-  const [reload, setReload]       = useState(false)
-  const [rstate, dispatch]        = useReducer(reducer, {
+  const [queue, setQueue]           = useState("")
+  const [queueInput, setQueueInput] = useState("")
+  const [message, setMessage]       = useState("")
+  const [consumed, setConsumed]     = useState("")
+  const [log, setLog]               = useState("")
+  const [reload, setReload]         = useState(false)
+  const [rstate, dispatch]          = useReducer(reducer, {
     nodes: [],
     queueList: [],
   });
 
   useEffect(() => {
-    dispatch({type: "getAll", payload: { queue: queue }})
+    setReload(true);
   }, []);
 
   useEffect(() => {
     if (reload) {
-      dispatch({type: "getAll", payload: { queue: queue }})
-      // dispatch({type: "getQueueList"});
-      Dispatch({type: "getQueueList"});
+      dispatch({type: "getAll", payload: { queue: queue }});
+      dispatch({type: "getQueueList"});
       setReload(false);
     }
   }, [reload]);
 
+  useEffect(() => {
+      dispatch({type: "getAll", payload: { queue: queue }});
+  }, [queue]);
+  
   // IPC listeners.
   if (!listenersDefined) {
     
     setListeners({
-      setQueue,
-      setQueueList,
       setConsumed,
       setLog,
       setReload,
@@ -52,8 +53,8 @@ function App() {
       <StateProvider state={{
         queue, 
         setQueue, 
-        queueList, 
-        setQueueList, 
+        queueInput, 
+        setQueueInput,
         message, 
         consumed, 
         log, 
