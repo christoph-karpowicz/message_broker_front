@@ -18,7 +18,7 @@ const Main = () => {
             <div id="producer-panel">
                 <button id="produce" type="button" className="btn" onClick={
                         () => dispatch({
-                            type: "produce", 
+                            type: "produce",
                             payload: { queue: state.queue, message: state.message }
                         })}>
                     Produce

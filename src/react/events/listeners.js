@@ -16,10 +16,11 @@ export function setListeners(state) {
     ipcRenderer.on('consumeReply', (e, res) => {
         console.log(res)
         if (res.success) {
-            state.setConsumed(res.payload.data)
+            state.setConsumed(decodeURI(res.payload.data));
             // state.setLog(res.payload.message);
         }
         else {
+            state.setConsumed("");
             res.payload.message && state.setLog(res.payload.message);
         }
         state.setReload(true);
@@ -45,14 +46,18 @@ export function setListeners(state) {
         if (res.success) {
             const parsedResponse = JSON.parse(res.payload.data);
             nodes = parsedResponse.nodes.reverse();
+            nodes.map(node => {
+                node.message = decodeURI(node.message);
+                return node;
+            });
         }
         else {
             res.payload.message && state.setLog(res.payload.message);
             nodes = [];
         }
-        state.dispatch({ 
+        state.dispatch({
             type: "updateQueue", 
-            payload: { queue: nodes } 
+            payload: { queue: nodes }
         });
     })
 

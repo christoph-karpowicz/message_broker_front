@@ -7,7 +7,7 @@ class API {
             host,
             port,
             protocol
-        }
+        };
     }
 
     callback(response, resolve, reject) {
@@ -103,7 +103,7 @@ class API {
             data: {
                 queue: data.queue,
                 type: "produce",
-                data: data.msg
+                data: data.message
             },
             cb: this.callback
         });

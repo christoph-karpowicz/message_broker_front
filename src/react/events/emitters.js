@@ -34,30 +34,30 @@ const removeQueue = (payload) => {
 export const reducer = (state, action) => {
   switch (action.type) {
     case "consume":
-      consume(action.payload)
+      consume(action.payload);
       break;
     case "get":
-      get(action.payload)
+      get(action.payload);
       break;
     case "getAll":
-      getAll(action.payload)
+      getAll(action.payload);
       break;
     case "getQueueList":
       getQueueList();
       break;
     case "produce":
-      produce(action.payload)
+      produce(action.payload);
       break;
     case "produceRandom":
       const randomMsg = randomString();
-      action.payload.msg = randomMsg;
-      produce(action.payload)
+      action.payload.message = randomMsg;
+      produce(action.payload);
       break;
     case "addQueue":
-      addQueue(action.payload)
+      addQueue(action.payload);
       break;
     case "removeQueue":
-      removeQueue(action.payload)
+      removeQueue(action.payload);
       break;
     case "updateQueue":
       return { nodes: action.payload.queue, queueList: state.queueList };

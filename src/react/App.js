@@ -33,6 +33,7 @@ function App() {
 
   useEffect(() => {
       dispatch({type: "getAll", payload: { queue: queue }});
+      setConsumed("");
   }, [queue]);
   
   // IPC listeners.

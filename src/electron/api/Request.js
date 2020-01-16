@@ -13,40 +13,45 @@ class Request {
         const self = this;
         
         return new Promise(function(resolve, reject) {
-            const data  = querystring.stringify(self.data);
-            let resBody = '';
+            try {
+                const data  = querystring.stringify(self.data);
+                let resBody = '';
 
-            const request = net.request({
-                method: self.method,
-                protocol: self.server.protocol,
-                hostname: self.server.host,
-                port: self.server.port,
-                path: '/',
-            });
-
-            request.on('response', (response) => {
-                if (response.statusCode != 200) {
-                    reject(response);
-                }
-
-                response.on('error', (error) => {
-                    console.log(`ERROR: ${JSON.stringify(error)}`);
-                    reject(error);
+                const request = net.request({
+                    method: self.method,
+                    protocol: self.server.protocol,
+                    hostname: self.server.host,
+                    port: self.server.port,
+                    path: '/',
                 });
 
-                response.on('data', (chunk) => {
-                    resBody += chunk.toString();
+                request.on('response', (response) => {
+                    if (response.statusCode != 200) {
+                        reject(response);
+                    }
+
+                    response.on('error', (error) => {
+                        console.log(`ERROR: ${JSON.stringify(error)}`);
+                        reject(error);
+                    });
+
+                    response.on('data', (chunk) => {
+                        resBody += chunk.toString();
+                    });
+                    
+                    response.on('end', () => {
+                        // console.log(`BODY: ${resBody}`);
+                        resolve(JSON.parse(resBody));
+                    });
                 });
-                
-                response.on('end', () => {
-                    // console.log(`BODY: ${resBody}`);
-                    resolve(JSON.parse(resBody));
-                });
-            });
             
-            request.write(data);
-
-            request.end();
+                request.write(data);
+                request.end();
+            }
+            catch (error) {
+                console.error(error);
+                reject(error);
+            }
         });
     }
 }
